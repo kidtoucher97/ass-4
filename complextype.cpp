@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <cstdlib>
+#include <sstream>
 
 using namespace std;
 
@@ -122,30 +123,54 @@ istream& operator>>( istream& in, complexType& complex){
 
 			num1 = input.substr(0, psign[0]);
 			num2 = input.substr(psign[0]+1, input.length()-psign[0]-2);
-			complex.rpart = stoi(num1);
+			int num;
+			stringstream number(num1);
+			number >> num;
+			complex.rpart = num;
 			if(sign[0] == '-')
 				if(input[psign[0]+1] == 'i')
 					complex.ipart = -1;
-				else complex.ipart = -stoi(num2);
+				else {
+					int num;
+					stringstream number2(num2);
+					number2 >> num;
+					complex.ipart = -num;				}
 			else {
 			if(input[psign[0]+1] == 'i')
 				complex.ipart = 1;
-			else complex.ipart = stoi(num2);
+			else {
+				int num;
+				stringstream number2(num2);
+				number2 >> num;
+				complex.ipart = num;				}
 			}
 	}
 	else if(psign[0] == 0 and psign[1] != 0){
 	
 			num1 = input.substr(1, psign[1]-1);
 			num2 = input.substr(psign[1]+1, input.length()-psign[1]-2);
-			complex.rpart = -stoi(num1);
+			int num;
+			stringstream number1(num1);
+			number1 >> num;
+			complex.rpart = -num;
 			if(sign[1] == '-')
 				if(input[psign[1]+1] == 'i')
 					complex.ipart = -1;
-				else complex.ipart = -stoi(num2);
+				else {
+					int num;
+					stringstream number(num2);
+					number >> num;
+					complex.ipart = -num;
+				}
 			else {
 			if(input[psign[1]+1] == 'i')
 				complex.ipart = 1;
-			else complex.ipart = stoi(num2);
+			else {
+				int num;
+				stringstream number(num2);
+				number >> num;
+				complex.ipart = num;
+				}
 			}
 	}
 	else if(psign[0] == 0 and psign[1] == 0 and sign[0] == '-'){
@@ -154,17 +179,23 @@ istream& operator>>( istream& in, complexType& complex){
 				if(!isdigit(input[i]))
 					realOrImaginary = false;
 		if(!realOrImaginary){	
-		if(input[1] == 'i')
-			complex.ipart = -1;
-		else {
-			num1 = input.substr(1,input.length() - 2);
-			complex.ipart = -stoi(num1);
-		}
-		complex.rpart = 0;
-	}else{
-		complex.rpart = stoi(input);
-		complex.ipart = 0;
-		}
+			if(input[1] == 'i')
+				complex.ipart = -1;
+			else {
+				num1 = input.substr(1,input.length() - 2);
+				int num;
+				stringstream number2(num1);
+				number2 >> num;
+				complex.ipart = -num;
+			}
+			complex.rpart = 0;
+		}else{
+			int num;
+			stringstream number(input);
+			number >> num;
+			complex.rpart = num;
+			complex.ipart = 0;
+			}
 
 	}else{
 		bool realOrImaginary = true;
@@ -176,10 +207,18 @@ istream& operator>>( istream& in, complexType& complex){
 		complex.rpart = 0;
 		if(input[0] == 'i')
 			complex.ipart = 1;
-		else complex.ipart = stoi(num1);
+		else {
+			stringstream number3(num1);
+			int num;
+			number3 >> num;
+			complex.ipart = num;
+		}
 	}
 	else {
-		complex.rpart = stoi(input);
+		int num;
+		stringstream number4(input);
+		number4 >> num;
+		complex.rpart = num;
 		complex.ipart = 0;
 		}
 	}
